@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'SBSansDisplay';
+  src: url('./assets/SBSansDisplay-Regular.otf') format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+$font-primary: 'SBSansDisplay';
+
+html,body{
+  margin:0;
+}
+
+body {
+  height: 100%;
+  background: white;
+
+  font-family: $font-primary;
+
+  * {
+    box-sizing: border-box;
+  }
+}
