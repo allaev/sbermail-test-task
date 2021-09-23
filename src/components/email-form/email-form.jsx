@@ -1,4 +1,6 @@
 import {useState, useEffect} from 'react';
+import Header from '../header/header';
+import { validateEmail } from '../../utils/utils';
 import './styles/email-form.scss';
 
 const EmailForm = () => {
@@ -8,27 +10,27 @@ const EmailForm = () => {
     message: ''
   });
 
-  const [emailTouched, setEmailTouched] = useState(false);
-  const [topicTouched, setTopicTouched] = useState(false);
-  const [messageTouched, setMessageTouched] = useState(false);
+  const [blurState, setBlurState] = useState({
+    email: false,
+    topic: false,
+    message: false
+  });
 
   const [emailError, setEmailError] = useState(true);
+  const [formError, setFormError] = useState(true);
 
+  useEffect(() => {
+    const isFormError = (emailError || Object.values(formState).some(x => x === ''));
+    setFormError(isFormError);
+  }, [emailError, formState])
+  
   const blurHandler = e => {
-    const name = e.target.name;
-    switch (name) {
-      case 'email':
-        setEmailTouched(true);
-        break;
-      case 'topic':
-        setTopicTouched(true);
-        break;
-      case 'message':
-        setMessageTouched(true);
-        break;
-      default:
-        return;
-    }
+    e.persist();
+    setBlurState(prevState => ({
+      ...prevState, ...{
+        [e.target.name]: true
+      }
+    }))
   }
 
   const changeInputHandler = e => {
@@ -42,22 +44,27 @@ const EmailForm = () => {
 
   const emailHandler = e => {
     changeInputHandler(e);
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const isEmailError = !re.test(String(e.target.value).toLowerCase());
+    const isEmailError = !validateEmail(e.target.value);
     setEmailError(isEmailError);
+  }
+
+  const submitHandler = e => {
+    e.preventDefault();
+    alert('Сообщение было успешно отправлено на указанный адрес');
+    window.location.reload();
   }
 
   const {email, topic, message} = formState;
   return (
     <div className="email-form">
-      <h1 className="header-text">
-        @Почта
-      </h1>
-      <form className="email-form__wrapper">
+      <Header
+        headerText="Почта"
+      />
+      <form className="email-form__wrapper" onSubmit={submitHandler}>
         <label className="email-form__field email-form__field_email">
           Email:
-          <input 
-            className={`input${(emailError && emailTouched) ? ' incorrect' : ''}`}
+          <input
+            className={`input${blurState.email ? (emailError ? ' incorrect' : ' correct') : ''}`}
             value={email}
             onChange={emailHandler}
             type="text" name="email" 
@@ -69,7 +76,7 @@ const EmailForm = () => {
           <input 
             value={topic}
             onChange={changeInputHandler}
-            className={`input${(!topic.length && topicTouched) ? ' incorrect' : ''}`} 
+            className={`input${blurState.topic ? (topic.length ? ' correct' :' incorrect') : ''}`} 
             type="text" name="topic" 
             onBlur={e => blurHandler(e)}
           />
@@ -77,11 +84,16 @@ const EmailForm = () => {
         <textarea
           value={message}
           onChange={changeInputHandler}
-          className={`email-form__field email-form__field_message${(!message.length && messageTouched) ? ' incorrect' :''}`} 
+          className={`email-form__field email-form__field_message${blurState.message ? (message.length ? ' correct' :' incorrect') : ''}`} 
           name="message" 
           onBlur={e => blurHandler(e)}
         />
-        <input type="submit" value="Отправить" className="submit"/>
+        <input
+          disabled={formError}
+          type="submit" 
+          value="Отправить" 
+          className={`submit${formError ? ' invalid' : ''}`}
+        />
       </form>
     </div>
   )

@@ -4,10 +4,6 @@
   border-radius: 20px;
   width: 60vw;
 
-  .header-text {
-    color: #21BA72;
-  }
-
   &__wrapper {
     display: flex;
     flex-flow: column nowrap;
@@ -49,6 +45,11 @@
       width: 40vw;
       cursor: pointer;
       font-family: inherit;
+
+      &.invalid {
+        cursor: not-allowed;
+        background: #c2c2c2;
+      }
     }
   }
 
