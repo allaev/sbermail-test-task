@@ -25,7 +25,6 @@ const EmailForm = () => {
   }, [emailError, formState])
   
   const blurHandler = e => {
-    e.persist();
     setBlurState(prevState => ({
       ...prevState, ...{
         [e.target.name]: true
@@ -34,7 +33,6 @@ const EmailForm = () => {
   }
 
   const changeInputHandler = e => {
-    e.persist();
     setFormState(prevState => ({
       ...prevState, ...{
         [e.target.name]: e.target.value
