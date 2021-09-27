@@ -9,4 +9,4 @@ Run the app:
 > npm run start
 ```
 
-![8585](https://user-images.githubusercontent.com/34710484/134462216-849e6b0a-facf-4fcc-8348-1e100b2b9563.png)
+![Opera Снимок_2021-09-27_070549_sbermail-test-task herokuapp com](https://user-images.githubusercontent.com/34710484/134843966-99299037-c9ea-4db5-89a5-547a51a23539.png)
