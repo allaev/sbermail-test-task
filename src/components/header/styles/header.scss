@@ -3,16 +3,15 @@
   color: #21BA72;
   justify-content: center;
 
-//   &::before {
-//     @keyframes rotation {
-//       100% { transform: rotate(360deg); } 
-//     } 
+  &__logo {
+    @keyframes rotation {
+      100% { transform: rotate(360deg); } 
+    } 
 
-//     width: 40px;
-//     height: 40px;
-//     margin-right: 5px;
-//     content: url('../../../assets/atom.svg');
-
-//     animation: rotation 20s linear infinite; 
-//   }
+    content: url('../../../assets/atom.svg');
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+    animation: rotation 20s linear infinite; 
+  }
 }
